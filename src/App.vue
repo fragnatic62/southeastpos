@@ -1,12 +1,27 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <Navbar v-if="this.authorized===true || this.authorized==='true'" />
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
+
+
+<script>
+import Navigation from './components/Navigation'
+import { mapGetters } from "vuex"
+
+export default {
+  name: 'App',
+  components: {
+    Navbar: Navigation
+  },
+  computed : {
+    ...mapGetters(['authorized'])
+    }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -16,7 +31,6 @@
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
 
@@ -25,8 +39,11 @@
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #e5e5e5;
+      }
     }
-  }
 }
 </style>
+
+
+
