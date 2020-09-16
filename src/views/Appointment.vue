@@ -1,27 +1,28 @@
 <template>
-  <div class="patients">
-    <div v-for="appointment in this.allAppointments.results" :key="appointment.id">
-      <p>{{ appointment.date }}</p>
-    </div>
-  </div>
+    <v-sheet 
+    class="main-container" 
+    color="grey lighten-3"
+    >
+    </v-sheet>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex"
 
 export default {
-  computed: mapGetters(['allAppointments', 'getAccessToken']),
-  methods: {
-    ...mapActions(['fetchAppointments']),
-  },
-  created () {
-    this.fetchAppointments(this.getAccessToken)
-  }
+    data () {
+        return {
+        }
+    },
+    components :{
+    }
 }
 </script>
 
 <style>
- .patients {
-   left: 25%;
- }
+.main-container {
+    height: 727px;
+    margin-left: 265px !important;
+    margin-right: 5px;
+}
+
 </style>

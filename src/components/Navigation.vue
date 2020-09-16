@@ -1,17 +1,6 @@
 <template>
   <v-container  class="pt-0 pr-0 pl-0 pb-0 ml-0 mr-0 mt-0">
       <v-row>
-        <v-col class="pt-0">
-          <v-app-bar
-          color="pink"
-          dark
-          prominent
-          height="90"
-          >
-            <v-spacer></v-spacer>
-          </v-app-bar>
-        </v-col>
-        
           <v-navigation-drawer
           v-model="drawer"
           :color="color"
@@ -64,7 +53,7 @@
         drawer: true,
         items: [
           { title: 'DASHBOARD', icon: 'mdi-view-dashboard', to: "/" },
-          { title: 'APPOINTMENTS', icon: 'mdi-calendar-clock', to: "/patients" },
+          { title: 'APPOINTMENTS', icon: 'mdi-calendar-clock', to: "/appointments" },
           { title: 'ROOMS', icon: 'mdi-home-circle-outline', to: "/room" },
           { title: 'MACHINES', icon: 'mdi-state-machine', to: "/machine" },
           { title: 'PROCEDURES', icon: 'mdi-account-heart', to: "/procedure" },
@@ -88,9 +77,6 @@
 </script>
 
 <style>
-  .v-navigation-drawer{
-    top: 91px !important;
-  }
   .container {
     max-width: 1687px !important;
   }

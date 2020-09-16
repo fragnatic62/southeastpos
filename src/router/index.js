@@ -4,13 +4,7 @@ import Login from '../views/Login.vue'
 import About from '../views/About.vue'
 import Home from '../views/Home.vue'
 import Logout from '../views/Logout.vue'
-import Patients from '../views/Patients.vue'
-import Machine from '../views/Machine.vue'
-import Room from '../views/Room.vue'
-import Procedure from '../views/Procedure.vue'
 import Appointment from '../views/Appointment.vue'
-import BookingCalendar from '../views/BookingCalendar.vue'
-import Booking from '../views/Booking.vue'
 
 Vue.use(VueRouter)
 
@@ -43,57 +37,9 @@ const routes = [
     }
   },
   {
-    path: '/patients',
-    name: 'Patients',
-    component: Patients,
-    meta : {
-      requiresLogin: true
-    }
-  },
-  {
-    path: '/machine',
-    name: 'Machine',
-    component: Machine,
-    meta : {
-      requiresLogin: true
-    }
-  },
-  {
-    path: '/room',
-    name: 'Room',
-    component: Room,
-    meta : {
-      requiresLogin: true
-    }
-  },
-  {
-    path: '/procedure',
-    name: 'Procedure',
-    component: Procedure,
-    meta : {
-      requiresLogin: true
-    }
-  },
-  {
-    path: '/appointment',
-    name: 'Appointement',
+    path: '/appointments',
+    name: 'Appointment',
     component: Appointment,
-    meta : {
-      requiresLogin: true
-    }
-  },
-  {
-    path: '/bookingcalendar',
-    name: 'BookingCalendar',
-    component: BookingCalendar,
-    meta : {
-      requiresLogin: true
-    }
-  },
-  {
-    path: '/booking',
-    name: 'Booking',
-    component: Booking,
     meta : {
       requiresLogin: true
     }
