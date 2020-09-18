@@ -52,8 +52,8 @@
       return {
         drawer: true,
         items: [
-          { title: 'DASHBOARD', icon: 'mdi-view-dashboard', to: "/" },
           { title: 'APPOINTMENTS', icon: 'mdi-calendar-clock', to: "/appointments" },
+          { title: 'PATIENTS', icon: 'mdi-account-heart', to: "/patients" },
           { title: 'ROOMS', icon: 'mdi-home-circle-outline', to: "/room" },
           { title: 'MACHINES', icon: 'mdi-state-machine', to: "/machine" },
           { title: 'PROCEDURES', icon: 'mdi-account-heart', to: "/procedure" },

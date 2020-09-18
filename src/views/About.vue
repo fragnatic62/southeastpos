@@ -1,5 +1,30 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+    <v-sheet
+    class="main-container"
+    color="grey lighten-3"
+    >
+    </v-sheet>
 </template>
+
+<script>
+
+export default {
+    data () {
+        return {
+
+        }
+    },
+    components :{
+    }
+}
+</script>
+
+<style>
+.main-container {
+    height: 727px;
+    margin-left: 265px !important;
+    margin-right: 5px;
+    margin-top: 13px;
+}
+
+</style>
