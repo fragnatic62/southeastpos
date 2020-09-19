@@ -24,9 +24,7 @@ const actions = {
                 localStorage.setItem('refresh_token',response.data.refresh)
                 localStorage.setItem('is_authenticated',true)
                 commit('setAuthorization', true)
-                commit('updateStorage' , 
-                { access_token: response.data.access, refresh_token: response.data.refresh }
-                )
+                commit('updateStorage' , { access_token: response.data.access, refresh_token: response.data.refresh })
             })
         },
     logout ({ commit }) {

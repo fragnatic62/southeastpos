@@ -8,6 +8,7 @@ import Patient from '../views/Patients.vue'
 import Rooms from '../views/Rooms.vue'
 import Machines from '../views/Machines.vue'
 import Procedures from '../views/Procedures.vue'
+import NewAppointment from '../components/NewAppointment.vue'
 
 Vue.use(VueRouter)
 
@@ -45,7 +46,7 @@ const routes = [
     component: Patient,
     meta : {
       requiresLogin: true
-    }
+    },
   },
   {
     path: '/room',
@@ -67,6 +68,15 @@ const routes = [
     path: '/procedure',
     name: 'Procedures',
     component: Procedures,
+    meta : {
+      requiresLogin: true
+    }
+  },
+  {
+    path: '/newappointment/:id',
+    name: 'NewAppointment',
+    component: NewAppointment,
+    props:true,
     meta : {
       requiresLogin: true
     }
