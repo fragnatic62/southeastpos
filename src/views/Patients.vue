@@ -80,12 +80,18 @@
             >
                 mdi-delete
             </v-icon>
-              <v-icon
-                  small
-                  @click="newAppointment(item)"
-              >
-                  mdi-calendar-plus
-              </v-icon>
+            <v-icon
+                small
+                @click="newAppointment(item)"
+            >
+                mdi-calendar-plus
+            </v-icon>
+            <v-icon
+                small
+                @click="viewAppointment(item)"
+            >
+                mdi-eye-settings-outline
+            </v-icon>
             </template>
             <template v-slot:no-data>
             <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -205,6 +211,9 @@ export default {
 
     newAppointment (item){
       this.$router.push(`/newappointment/${item.id}`)
+    },
+    viewAppointment (item){
+      this.$router.push(`/viewappointment/${item.id}`)
     }
   },
 }

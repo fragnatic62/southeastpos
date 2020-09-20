@@ -110,60 +110,73 @@
 </template>
 
 <script>
-  export default {
+import {mapActions, mapGetters } from "vuex"
+
+export default {
     data: () => ({
-      focus: '',
-      type: 'month',
-      typeToLabel: {
+        focus: '',
+        type: 'month',
+        typeToLabel: {
         month: 'Month',
         week: 'Week',
         day: 'Day',
         '4day': '4 Days',
-      },
-      selectedEvent: {},
-      selectedElement: null,
-      selectedOpen: false,
-      events: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+        },
+        selectedEvent: {},
+        selectedElement: null,
+        selectedOpen: false,
+        events: [],
+        colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+        names: ['Appointment Session'],
     }),
+    props:['id'],
     mounted () {
-      this.$refs.calendar.checkChange()
+        this.$refs.calendar.checkChange()
+    },
+    computed: {
+        ...mapGetters(['allAppointments'])
     },
     methods: {
-      viewDay ({ date }) {
+        ...mapActions(['fetchAppointments']),
+        viewDay ({ date }) {
         this.focus = date
         this.type = 'day'
-      },
-      getEventColor (event) {
+        },
+        getEventColor (event) {
         return event.color
-      },
-      setToday () {
+        },
+        setToday () {
         this.focus = ''
-      },
-      prev () {
+        },
+        prev () {
         this.$refs.calendar.prev()
-      },
-      next () {
+        },
+        next () {
         this.$refs.calendar.next()
-      },
-      showEvent ({ nativeEvent, event }) {
+        },
+        showEvent ({ nativeEvent, event }) {
         const open = () => {
-          this.selectedEvent = event
-          this.selectedElement = nativeEvent.target
-          setTimeout(() => this.selectedOpen = true, 10)
+            this.selectedEvent = event
+            this.selectedElement = nativeEvent.target
+            setTimeout(() => this.selectedOpen = true, 10)
         }
 
         if (this.selectedOpen) {
-          this.selectedOpen = false
-          setTimeout(open, 10)
+            this.selectedOpen = false
+            setTimeout(open, 10)
         } else {
-          open()
+            open()
         }
 
         nativeEvent.stopPropagation()
-      },
-      updateRange ({ start, end }) {
+        },
+        updateRange ({ start, end }) {
+        let appointment_list = []
+
+        for (let i = 0; i<this.allAppointments.length; i++) {
+                appointment_list.push(this.allAppointments[i].sessions)
+        }
+        console.log(appointment_list,'asas')
         const events = []
 
         const min = new Date(`${start.date}T00:00:00`)
@@ -172,28 +185,31 @@
         const eventCount = this.rnd(days, days + 20)
 
         for (let i = 0; i < eventCount; i++) {
-          const allDay = this.rnd(0, 3) === 0
-          const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-          const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-          const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-          const second = new Date(first.getTime() + secondTimestamp)
+            const allDay = this.rnd(0, 3) === 0
+            const firstTimestamp = this.rnd(min.getTime(), max.getTime())
+            const first = new Date(firstTimestamp - (firstTimestamp % 900000))
+            const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
+            const second = new Date(first.getTime() + secondTimestamp)
 
-          events.push({
+            events.push({
             name: this.names[this.rnd(0, this.names.length - 1)],
             start: first,
             end: second,
             color: this.colors[this.rnd(0, this.colors.length - 1)],
             timed: !allDay,
-          })
+            })
         }
 
         this.events = events
-      },
-      rnd (a, b) {
+        },
+        rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
-      },
+        },
     },
-  }
+    created () {
+        this.fetchAppointments({patient_id:this.id})
+    }
+}
 </script>
 
 <style>

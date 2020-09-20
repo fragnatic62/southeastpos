@@ -3,12 +3,12 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import About from '../views/About.vue'
 import Logout from '../views/Logout.vue'
-import Appointment from '../views/Appointment.vue'
 import Patient from '../views/Patients.vue'
 import Rooms from '../views/Rooms.vue'
 import Machines from '../views/Machines.vue'
 import Procedures from '../views/Procedures.vue'
 import NewAppointment from '../components/NewAppointment.vue'
+import ViewAppointment from '../components/ViewAppointment.vue'
 
 Vue.use(VueRouter)
 
@@ -28,14 +28,6 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About,
-    meta : {
-      requiresLogin: true
-    }
-  },
-  {
-    path: '/appointments',
-    name: 'Appointment',
-    component: Appointment,
     meta : {
       requiresLogin: true
     }
@@ -76,6 +68,15 @@ const routes = [
     path: '/newappointment/:id',
     name: 'NewAppointment',
     component: NewAppointment,
+    props:true,
+    meta : {
+      requiresLogin: true
+    }
+  },
+  {
+    path: '/viewappointment/:id',
+    name: 'ViewAppointment',
+    component: ViewAppointment,
     props:true,
     meta : {
       requiresLogin: true

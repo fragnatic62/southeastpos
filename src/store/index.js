@@ -6,6 +6,7 @@ import machines from './modules/machines.js'
 import procedures from './modules/procedures.js'
 import patients from './modules/patients.js'
 import bookings from './modules/bookings.js'
+import appointments from './modules/appointments.js'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     machines,
     procedures,
     patients,
-    bookings
+    bookings,
+    appointments
   }
 })
