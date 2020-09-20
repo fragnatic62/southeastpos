@@ -130,6 +130,13 @@ export default {
         names: ['Appointment Session'],
     }),
     props:['id'],
+    watch: {
+        async id (newval, oldval) {
+            console.log(newval)
+            await this.fetchAppointments({patient_id:this.id})
+            this.updateRange()
+        }
+    },
     mounted () {
         this.$refs.calendar.checkChange()
     },
@@ -170,34 +177,27 @@ export default {
 
         nativeEvent.stopPropagation()
         },
-        updateRange ({ start, end }) {
-        let appointment_list = []
+        updateRange () {
+            let appointment_list = []
 
-        for (let i = 0; i<this.allAppointments.length; i++) {
-                appointment_list.push(this.allAppointments[i].sessions)
-        }
-        console.log(appointment_list,'asas')
-        const events = []
+            for (let i = 0; i<this.allAppointments.length; i++) {
+                    appointment_list.push(this.allAppointments[i].sessions)
+            }
+            let merged = [].concat.apply([],appointment_list)
+            console.log(merged,'asas')
+            const events = []
 
-        const min = new Date(`${start.date}T00:00:00`)
-        const max = new Date(`${end.date}T23:59:59`)
-        const days = (max.getTime() - min.getTime()) / 86400000
-        const eventCount = this.rnd(days, days + 20)
+            for (let i = 0; i < merged.length; i++) {
+                let starts = new Date(`${merged[i].date}T${merged[i].start_time}`)
+                let ends = new Date(`${merged[i].date}T${merged[i].end_time}`)
 
-        for (let i = 0; i < eventCount; i++) {
-            const allDay = this.rnd(0, 3) === 0
-            const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-            const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-            const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-            const second = new Date(first.getTime() + secondTimestamp)
-
-            events.push({
-            name: this.names[this.rnd(0, this.names.length - 1)],
-            start: first,
-            end: second,
-            color: this.colors[this.rnd(0, this.colors.length - 1)],
-            timed: !allDay,
-            })
+                events.push({
+                name: this.names[this.rnd(0, this.names.length - 1)],
+                start: starts,
+                end: ends,
+                color: this.colors[this.rnd(0, this.colors.length - 1)],
+                timed: false,
+                })
         }
 
         this.events = events
@@ -206,8 +206,9 @@ export default {
         return Math.floor((b - a + 1) * Math.random()) + a
         },
     },
-    created () {
-        this.fetchAppointments({patient_id:this.id})
+    async created () {
+        await this.fetchAppointments({patient_id:this.id})
+        this.updateRange()
     }
 }
 </script>
