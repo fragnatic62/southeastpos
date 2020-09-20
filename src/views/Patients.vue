@@ -20,6 +20,9 @@
                     v-bind="attrs"
                     v-on="on"
                     >New Item</v-btn>
+                    <span class="header-text">
+                      <strong>List of Patients</strong>
+                    </span>
                 </template>
                 <v-card>
                     <v-card-title>

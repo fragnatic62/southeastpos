@@ -22,7 +22,9 @@
             prepend-inner-icon="mdi-lock"
             v-model="password"
             label="Password"
+            :type="showText ? 'text' : 'password'"
             required
+            @click:append="showPass = !showPass"
             solo
             ></v-text-field>
             <p v-if="incorrectAuth">Incorrect email and password combination</p>
@@ -46,9 +48,11 @@ import { mapActions } from "vuex"
   export default {
     data: () => ({
       valid: true,
+      showPass: false,
       password: '',
       email: '',
       incorrectAuth: false,
+      showText:false
     }),
 
     methods: {

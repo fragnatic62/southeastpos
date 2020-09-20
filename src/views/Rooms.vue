@@ -21,7 +21,7 @@
                     v-on="on"
                     >New Item</v-btn>
                     <span class="header-text">
-                      <strong>List of rooms</strong>
+                      <strong>List of Rooms</strong>
                     </span>
                 </template>
                 <v-card>
