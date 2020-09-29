@@ -9,6 +9,7 @@ import Machines from '../views/Machines.vue'
 import Procedures from '../views/Procedures.vue'
 import NewAppointment from '../components/NewAppointment.vue'
 import ViewAppointment from '../components/ViewAppointment.vue'
+import AllAppointment from '../components/AllAppointment.vue'
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,15 @@ const routes = [
     path: '/viewappointment/:id',
     name: 'ViewAppointment',
     component: ViewAppointment,
+    props:true,
+    meta : {
+      requiresLogin: true
+    }
+  },
+  {
+    path: '/',
+    name: 'Home',
+    component: AllAppointment,
     props:true,
     meta : {
       requiresLogin: true

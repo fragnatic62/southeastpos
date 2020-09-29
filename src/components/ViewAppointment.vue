@@ -1,7 +1,6 @@
 <template>
     <v-sheet
     class="main-container"
-    color="grey lighten-3"
     >
             <v-row class="fill-height">
             <v-col>
@@ -184,7 +183,6 @@ export default {
                     appointment_list.push(this.allAppointments[i].sessions)
             }
             let merged = [].concat.apply([],appointment_list)
-            console.log(merged,'asas')
             const events = []
 
             for (let i = 0; i < merged.length; i++) {
@@ -213,12 +211,16 @@ export default {
 }
 </script>
 
-<style>
-.main-container {
-    height: 727px;
-    margin-left: 265px !important;
-    margin-right: 5px;
-    margin-top: 13px;
-}
+<style scoped>
+    .main-container {
+        height: 727px;
+        margin-left: 100px !important;
+        margin-right: 100px;
+        margin-top: 13px;
+    }
+
+    .header-text{
+    margin-left: 35%;
+    }
 
 </style>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from '../contants';
 
 
 const state = {
@@ -17,7 +18,7 @@ const getters = {
 
 const actions = {
     async fetchPatients({ commit }){
-        await axios.get('http://128.199.137.150/api/v1/patient/?limit=1000')
+        await axios.get(`${BASE_URL}/patient/?limit=1000`)
         .then(response =>{
             console.log(response.data)
             commit('setAllPatients',{ patients: response.data.results });
@@ -28,7 +29,7 @@ const actions = {
     },
 
     async addPatient({ commit }, payload){
-        await axios.post('http://128.199.137.150/api/v1/patient/' , payload.data,
+        await axios.post(`${BASE_URL}/patient/` , payload.data,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ const actions = {
 
     async updatePatient({ commit }, payload){
         console.log(payload)
-        await axios.patch(`http://128.199.137.150/api/v1/patient/${payload.data.id}/`, payload.data, 
+        await axios.patch(`${BASE_URL}/patient/${payload.data.id}/`, payload.data, 
             {
                 headers: {
                     'Content-Type': 'application/json',

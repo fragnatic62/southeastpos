@@ -1,7 +1,6 @@
 <template>
     <v-sheet
     class="main-container"
-    color="grey lighten-3"
     >
       <v-row>
         <v-col cols="4">
@@ -491,19 +490,15 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .main-container {
     height: 727px;
-    margin-left: 265px !important;
-    margin-right: 5px;
+    margin-left: 100px !important;
+    margin-right: 100px;
     margin-top: 13px;
 }
 
-.user-card {
-    background-color: #FFFFFF !important;
+.header-text{
+  margin-left: 35%;
 }
-.data-table {
-    width: 100%;
-}
-
 </style>

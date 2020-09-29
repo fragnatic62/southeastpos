@@ -1,7 +1,6 @@
 <template>
     <v-sheet
     class="main-container"
-    color="grey lighten-3"
     >
         <v-data-table
         :headers="headers"
@@ -176,12 +175,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .main-container {
     height: 727px;
-    margin-left: 265px !important;
-    margin-right: 5px;
+    margin-left: 100px !important;
+    margin-right: 100px;
     margin-top: 13px;
 }
 
+.header-text{
+  margin-left: 35%;
+}
 </style>

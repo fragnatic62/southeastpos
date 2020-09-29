@@ -72,10 +72,17 @@ import { mapActions } from "vuex"
         })
       },
     },
+    created () {
+        if(localStorage.getItem('access_token') !== null && 
+          localStorage.getItem('refresh_token') !== null && 
+          localStorage.getItem('is_authenticated') !== false) {
+          this.$router.push({name: "Home"})
+        }
+    }
   }
 </script>
 
-<style>
+<style scoped>
   .login-card {
     padding-top: 15%;
   }

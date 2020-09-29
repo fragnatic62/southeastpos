@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from '../contants';
 
 const state = {
     appointments:[]
@@ -10,7 +11,7 @@ const getters = {
 
 const actions = {
     async fetchAppointments({ commit }, payload  ){
-        await axios.get(`http://128.199.137.150/api/v1/session/session/?patient=${payload.patient_id}`)
+        await axios.get(`${BASE_URL}/session/session/?patient=${payload.patient_id}`)
         .then(response =>{
             commit('setAllAppointments',{ appointments: response.data.results });
         })

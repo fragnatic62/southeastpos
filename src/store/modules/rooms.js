@@ -1,11 +1,13 @@
 import axios from 'axios'
+import { BASE_URL } from '../contants';
 
 
 const state = {
     rooms : [],
     updated_room : null,
     new_room : null,
-    room: null
+    room: null,
+    occupied_rooms: [],
 };
 
 
@@ -14,12 +16,13 @@ const getters = {
     updatedRoom: (state) => state.updated_room,
     newRoom: (state) => state.new_room,
     getUsedRoom: (state) => state.room,
+    getOccupiedRooms: (state) => state.occupied_rooms
 };
 
 
 const actions = {
     async fetchRooms({ commit }){
-        await axios.get('http://128.199.137.150/api/v1/room/?limit=1000')
+        await axios.get(`${BASE_URL}/room/?limit=1000`)
         .then(response =>{
             commit('setAllRooms',{ rooms: response.data.results });
         })
@@ -29,7 +32,7 @@ const actions = {
     },
 
     async getRoom({ commit }, payload){
-        await axios.get(`http://128.199.137.150/api/v1/room/${payload.id}/`, {}, 
+        await axios.get(`${BASE_URL}/room/${payload.id}/`, {}, 
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +47,7 @@ const actions = {
     },
 
     async addRoom({ commit }, payload){
-        await axios.post('http://128.199.137.150/api/v1/room/' , payload.data,
+        await axios.post(`${BASE_URL}/room/` , payload.data,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +64,7 @@ const actions = {
 
     async updateRoom({ commit }, payload){
         console.log(payload)
-        await axios.patch(`http://128.199.137.150/api/v1/room/${payload.data.id}/`, payload.data, 
+        await axios.patch(`${BASE_URL}/room/${payload.data.id}/`, payload.data, 
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,6 +76,19 @@ const actions = {
         }).catch(error =>{
             console.log(error)
         })
+    },
+    async fetchOccupiedRooms({ commit }, payload) {
+        await axios.get(`${BASE_URL}/session/session_appointment/${payload.data.id}/room_occupied_list/`,{},
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${payload.token}`
+                }
+            }).then(response => {
+                commit('setOccupiedRooms',{ room :response.data})
+            }).catch(error => {
+                console.log(error)
+            })
     }
 
 };
@@ -89,6 +105,10 @@ const mutations = {
     },
     setRoom (state, { room }){
         state.room = room
+    },
+    setOccupiedRooms(state, { room }){
+        
+        state.occupied_rooms = room
     }
 
 };

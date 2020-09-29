@@ -19,12 +19,6 @@ export default {
 }
 </script>
 
-<style>
-.main-container {
-    height: 727px;
-    margin-left: 265px !important;
-    margin-right: 5px;
-    margin-top: 13px;
-}
+<style scoped>
 
 </style>

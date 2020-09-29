@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from '../contants';
 
 
 const state = {
@@ -16,7 +17,7 @@ const getters = {
 
 const actions = {
     async fetchProcedures ({ commit }){
-        await axios.get('http://128.199.137.150/api/v1/procedure/?limit=1000')
+        await axios.get(`${BASE_URL}/procedure/?limit=1000`)
         .then(response =>{
             console.log(response.data)
             commit('setAllProcedures',{ procedures: response.data.results });
@@ -27,7 +28,7 @@ const actions = {
     },
 
     async addProcedure({ commit }, payload){
-        await axios.post('http://128.199.137.150/api/v1/procedure/' , payload.data,
+        await axios.post(`${BASE_URL}/procedure/` , payload.data,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ const actions = {
 
     async updateProcedure({ commit }, payload){
         console.log(payload)
-        await axios.patch(`http://128.199.137.150/api/v1/procedure/${payload.data.id}/`, payload.data, 
+        await axios.patch(`${BASE_URL}/procedure/${payload.data.id}/`, payload.data, 
             {
                 headers: {
                     'Content-Type': 'application/json',

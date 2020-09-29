@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from '../contants';
 
 
 const state = {
@@ -18,7 +19,7 @@ const getters = {
 
 const actions = {
     async fetchUser({ commit }, payload) {
-        await axios.get(`http://128.199.137.150/api/v1/patient/${payload.user_id}/`,{},
+        await axios.get(`${BASE_URL}/api/v1/patient/${payload.user_id}/`,{},
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ const actions = {
     },
 
     async createSession({ commit }, payload) {
-        await axios.post('http://128.199.137.150/api/v1/session/session/', payload.data,
+        await axios.post(`${BASE_URL}/session/session/`, payload.data,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ const actions = {
 
     async updateSession({ commit }, payload) {
         console.log(payload.data.room)
-        await axios.patch(`http://128.199.137.150/api/v1/session/session_appointment/${payload.data.id}/`, payload.data,
+        await axios.patch(`${BASE_URL}/session/session_appointment/${payload.data.id}/`, payload.data,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ const actions = {
     },
 
     async deleteSession({ commit }, payload ) {
-        await axios.delete(`http://128.199.137.150/api/v1/session/session_appointment/${payload.id}/`, {},
+        await axios.delete(`${BASE_URL}/session/session_appointment/${payload.id}/`, {},
             {
                 headers: {
                     'Content-Type': 'application/json',

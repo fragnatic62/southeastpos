@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from '../contants';
 
 
 const state = {
@@ -16,7 +17,7 @@ const getters = {
 const actions = {
     async authenticate ({ commit }, credentials) {
         await axios.post(
-            'http://128.199.137.150/api/v1/auth/token/',
+            `${BASE_URL}/auth/token/`,
             credentials
             )
             .then(response => {

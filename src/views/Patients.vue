@@ -1,7 +1,6 @@
 <template>
     <v-sheet
     class="main-container"
-    color="grey lighten-3"
     >
         <v-data-table
         :headers="headers"
@@ -10,8 +9,8 @@
         class="elevation-1"
         >
             <template v-slot:top>
-            <v-toolbar height="140" flat color="white">
-                <v-dialog v-model="dialog" max-width="500px">
+            <v-toolbar flat color="white">
+                <v-dialog v-model="dialog" height="85%" max-width="800px">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn
                     color="primary"
@@ -32,29 +31,35 @@
                     <v-card-text>
                     <v-container>
                         <v-row>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="6">
                               <v-text-field v-model="editedItem.first_name" label="First name"></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="6">
                               <v-text-field v-model="editedItem.middle_name" label="Middle name"></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="6">
                               <v-text-field v-model="editedItem.last_name" label="Last name"></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="6">
                               <v-text-field v-model="editedItem.contact_no" label="Contact number"></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="6">
                               <v-text-field v-model="editedItem.age" label="Age"></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="6">
                               <v-text-field v-model="editedItem.gender" label="Gender"></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
+                          <v-col cols="6">
                               <v-text-field v-model="editedItem.occupation" label="Occupation"></v-text-field>
                           </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                              <v-text-field v-model="editedItem.address" label="Address"></v-text-field>
+                          <v-col
+                            cols="6"
+                          >
+                            <v-textarea
+                              name="input-7-1"
+                              label="Address"
+                              v-model="editedItem.address"
+                            ></v-textarea>
                           </v-col>
                         </v-row>
                     </v-container>
@@ -62,39 +67,32 @@
 
                     <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                    <v-btn color="success" @click="close">Cancel</v-btn>
+                    <v-btn color="error" @click="save">Save</v-btn>
                     </v-card-actions>
                 </v-card>
                 </v-dialog>
             </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
-            <v-icon
-                small
-                class="mr-2"
-                @click="editItem(item)"
+            <v-btn 
+              small 
+              class="ma-2" 
+              color="success"
+              @click="editItem(item)"
             >
-                mdi-pencil
-            </v-icon>
-            <v-icon
-                small
-                @click="deleteItem(item)"
+              <v-icon left>mdi-pencil</v-icon> Edit
+            </v-btn>
+
+            <v-btn 
+              small 
+              class="ma-2" 
+              color="error"
+              @click="deleteItem(item)"
             >
-                mdi-delete
-            </v-icon>
-            <v-icon
-                small
-                @click="newAppointment(item)"
-            >
-                mdi-calendar-plus
-            </v-icon>
-            <v-icon
-                small
-                @click="viewAppointment(item)"
-            >
-                mdi-eye-settings-outline
-            </v-icon>
+              <v-icon left>mdi-trash-can-outline</v-icon> Delete
+            </v-btn>
+
             </template>
             <template v-slot:no-data>
             <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -222,12 +220,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .main-container {
     height: 727px;
-    margin-left: 265px !important;
-    margin-right: 5px;
+    margin-left: 100px !important;
+    margin-right: 100px;
     margin-top: 13px;
 }
 
+.header-text{
+  margin-left: 35%;
+}
 </style>
