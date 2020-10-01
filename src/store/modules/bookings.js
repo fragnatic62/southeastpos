@@ -50,7 +50,6 @@ const actions = {
     },
 
     async updateSession({ commit }, payload) {
-        console.log(payload.data.room)
         await axios.patch(`${BASE_URL}/session/session_appointment/${payload.data.id}/`, payload.data,
             {
                 headers: {

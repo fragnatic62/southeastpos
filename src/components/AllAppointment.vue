@@ -408,16 +408,76 @@
               show-select
               class="elevation-1"
             >
+            <template v-slot:item.date="{ item }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="black"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    text
+                    x-small
+                    depressed
+                    @click="date_dialog = true"
+                  >
+                    {{ item.date }}
+                  </v-btn>
+                </template>
+                <v-dialog
+                  v-model="date_dialog"
+                  max-width="261px"
+                >
+                  <v-card>
+                    <v-card-title>
+                      <v-menu
+                        v-model="menu_datepicker_update"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="260px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="update_date"
+                            label="Select date"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="update_date"
+                          @input="updateSessionDate(item)"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-card-title>
+                  </v-card>
+                </v-dialog>
+                <span>Click to update</span>
+              </v-tooltip>
+            </template>
             </v-data-table>
             <div class="text-center pt-2">
-              <v-btn
-                small
-                color="success" 
-                class="ma-2"
-                @click="resetGeneratedSessionsTable"
-              >
-                Finalize
-              </v-btn>
+              <v-row>
+                <v-col cols="4">
+                  <span>
+                    <small>Note: Click date to update</small>
+                  </span>
+                </v-col>
+                <v-col cols="4">
+                  <v-btn
+                    small
+                    color="success" 
+                    class="ma-2"
+                    @click="resetGeneratedSessionsTable"
+                  >
+                    Finalize
+                  </v-btn>
+                </v-col>
+              </v-row>
             </div>
           </v-sheet>
         </v-row>
@@ -432,11 +492,13 @@ import { mapActions, mapGetters } from "vuex"
   export default {
     data () {
       return {
+        menu_datepicker_update: false,
+        date_dialog:false,
         isEditing: false,
         color: '',
         snackbar: false,
         text: '',
-        timeout: 6000,
+        timeout: 3000,
         editedIndex: -1,
         editedItem: {},
         selected: [],
@@ -445,6 +507,7 @@ import { mapActions, mapGetters } from "vuex"
         room_dialog:false,
         machine_dialog:false,
         session_start_date_menu: false,
+        update_date: new Date().toISOString().substr(0, 10),
         date: new Date().toISOString().substr(0, 10),
         selected_start_date: this.formatDate(new Date().toISOString().substr(0, 10)),
         room_date: new Date().toISOString().substr(0, 10),
@@ -579,8 +642,8 @@ import { mapActions, mapGetters } from "vuex"
     computed: {
       ...mapGetters([
         'getOccupiedRooms','getAccessToken','allRooms',
-        'allPatients','getOccupiedMachine','allMachines',
-        'allProcedures','getAppointmentSessions']),
+        'allPatients','getOccupiedMachine','allMachines','getAccessToken',
+        'allProcedures','getAppointmentSessions','getUpdatedAppointmentSessions']),
         computedDateFormatted () {
           return this.formatDate(this.date)
         },
@@ -589,7 +652,7 @@ import { mapActions, mapGetters } from "vuex"
       ...mapActions([
         'fetchOccupiedRooms', 'fetchRooms','fetchPatients',
         'fetchOccupiedMachine','fetchMachines','fetchProcedures',
-        'createSession']),
+        'createSession', 'updateSession']),
       resetGeneratedSessionsTable(){
         this.generated_sessions = []
       },
@@ -648,6 +711,7 @@ import { mapActions, mapGetters } from "vuex"
                     }
                 }
             await this.createSession(payload)
+            console.log(this.getAppointmentSessions)
             this.generated_sessions = this.getAppointmentSessions
             this.clearSessionsFields()
             this.color = 'success'
@@ -663,27 +727,55 @@ import { mapActions, mapGetters } from "vuex"
        }
       },
       updateMachineOnSelectedSession (){
-        console.log(this.editedItem)
+        if (Object.entries(this.editedItem).length !== 0){
           let partial = {
-            ...this.editedItem
+              ...this.editedItem
+          }
+          partial.machine_start_time = this.machine_start_time
+          partial.machine_end_time = this.machine_end_time
+          partial.machine = this.selected_machine_schedule.name
+          Object.assign(this.generated_sessions[this.editedIndex], partial)
+          this.editedItem = Object.assign({},partial)
+          this.machine_dialog = false
         }
-        partial.machine_start_time = this.machine_start_time
-        partial.machine_end_time = this.machine_end_time
-        partial.machine = this.selected_machine_schedule.name
-        Object.assign(this.generated_sessions[this.editedIndex], partial)
-        this.editedItem = Object.assign({},partial)
-        this.machine_dialog = false
+        else { 
+            this.color = 'red darken-1'
+            this.text =  'No session selected'
+            this.snackbar = true
+        }
       },
       updateRoomOnSelectedSession() {
-        let partial = {
-            ...this.editedItem
+        if (Object.entries(this.editedItem).length !== 0){
+          let partial = {
+              ...this.editedItem
+          }
+          partial.room_start_time = this.room_start_time
+          partial.room_end_time = this.room_end_time
+          partial.room = this.selected_room_schedule.room_no
+          Object.assign(this.generated_sessions[this.editedIndex], partial)
+          this.editedItem = Object.assign({},partial)
+          this.room_dialog = false
         }
-        partial.room_start_time = this.room_start_time
-        partial.room_end_time = this.room_end_time
-        partial.room = this.selected_room_schedule.room_no
-        Object.assign(this.generated_sessions[this.editedIndex], partial)
-        this.editedItem = Object.assign({},partial)
-        this.room_dialog = false
+        else { 
+            this.color = 'red darken-1'
+            this.text =  'No session selected'
+            this.snackbar = true
+        }
+      },
+      async updateSessionDate(item){
+        this.date_dialog = false
+        this.menu_datepicker_update = false
+        let index = this.generated_sessions.indexOf(item)
+        let partial = {
+          ...item
+        }
+        partial.date = this.update_date
+        await this.updateSession({ data: partial, token: this.getAccessToken})
+        Object.assign(this.generated_sessions[index], this.getUpdatedAppointmentSessions)
+        this.color = 'success'
+        this.text =  'Date updated'
+        this.snackbar = true
+        this.isEditing = true
       },
       clearSessionsFields() {
         this.selected_patient = {}
