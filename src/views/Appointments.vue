@@ -41,22 +41,22 @@ import UnAssignedAppointment from "../components/UnAssignedAppointment.vue"
 import ReschedAppointment from "../components/ReschedAppointment.vue"
 
 export default {
-    data () {
-        return {
-            tab:null,
-            tab_list:[
-                "On Date","New Appointment",
-                "Unassigned Sessions",
-                "Reschedule Sessions"
-                ]
-        }
-    },
-    components: {
-        NewAppointment: NewAppointment,
-        OnDateAppointment: OnDateAppointment,
-        UnAssignedAppointment: UnAssignedAppointment,
-        ReschedAppointment: ReschedAppointment,
-    }
+  data () {
+      return {
+          tab:null,
+          tab_list:[
+              "On Date","New Appointment",
+              "Unassigned Sessions",
+              "Reschedule Sessions"
+              ]
+      }
+  },
+  components: {
+      NewAppointment: NewAppointment,
+      OnDateAppointment: OnDateAppointment,
+      UnAssignedAppointment: UnAssignedAppointment,
+      ReschedAppointment: ReschedAppointment,
+  }
 }
 </script>
 
