@@ -19,16 +19,16 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        Test1
+        <OnDateAppointment />
       </v-tab-item>
       <v-tab-item>
         <NewAppointment />
       </v-tab-item>
       <v-tab-item>
-        Test2
+        <UnAssignedAppointment />
       </v-tab-item>
       <v-tab-item>
-        Test3
+        <ReschedAppointment />
       </v-tab-item>
     </v-tabs-items>
   </v-sheet>
@@ -36,6 +36,9 @@
 
 <script>
 import NewAppointment from "../components/NewAppointment.vue"
+import OnDateAppointment from "../components/OnDateAppointment.vue"
+import UnAssignedAppointment from "../components/UnAssignedAppointment.vue"
+import ReschedAppointment from "../components/ReschedAppointment.vue"
 
 export default {
     data () {
@@ -49,7 +52,10 @@ export default {
         }
     },
     components: {
-        NewAppointment: NewAppointment
+        NewAppointment: NewAppointment,
+        OnDateAppointment: OnDateAppointment,
+        UnAssignedAppointment: UnAssignedAppointment,
+        ReschedAppointment: ReschedAppointment,
     }
 }
 </script>
