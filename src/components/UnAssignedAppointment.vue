@@ -15,11 +15,10 @@
         >
           <v-spacer></v-spacer>
           <v-toolbar-title>
-              Assign Room and Machine
+              Assign Room/Machine to sessions
           </v-toolbar-title>
           <v-spacer></v-spacer>
-          <MachineScheduleModal @onSaved="updateTable"  v-bind:session="editedSession" v-bind:index="selected_index" ref="MachineModal"/>
-          <RoomScheduleModal v-bind:session="editedSession" ref="RoomModal"/>
+          <ScheduleModal @onSaved="updateTable"  v-bind:session="editedSession" v-bind:index="selected_index" ref="ScheduleModal"/>
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -29,15 +28,7 @@
         small
         @click="updateRoomSchedule(item)"
       >
-        Machine Schedule
-      </v-btn>
-      <v-btn
-        class="ma-2"
-        color="success"
-        small
-        @click="updateMachineSchedule(item)"
-      >
-        Room Schedule
+        Set Schedule
       </v-btn>
       </template>
     </v-data-table>
@@ -46,8 +37,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex"
-import MachineScheduleModal from "./modals/MachineScheduleModal.vue"
-import RoomScheduleModal from "./modals/RoomScheduleModal.vue"
+import ScheduleModal from "./modals/ScheduleModal.vue"
 
   export default {
     data: () => ({
@@ -62,6 +52,8 @@ import RoomScheduleModal from "./modals/RoomScheduleModal.vue"
           sortable: false,
           value: 'client_info.client_name',
         },
+        { text: 'Procedure', value: 'procedure_name' },
+        { text: 'Tentative Appointment Date', value: 'date' },
         { text: 'Machine', value: 'machine_name' },
         { text: 'Machine Start Time', value: 'machine_start_time' },
         { text: 'Machine End Time', value: 'machine_end_time' },
@@ -73,8 +65,7 @@ import RoomScheduleModal from "./modals/RoomScheduleModal.vue"
       unassigned_appointments: [],
     }),
     components: {
-      RoomScheduleModal: RoomScheduleModal,
-      MachineScheduleModal: MachineScheduleModal,
+      ScheduleModal: ScheduleModal,
 
     },
     computed: {
@@ -92,7 +83,7 @@ import RoomScheduleModal from "./modals/RoomScheduleModal.vue"
       updateRoomSchedule (item) {
         this.editedSession=item
         this.selected_index = this.unassigned_appointments.indexOf(item)
-        this.$refs.MachineModal.open()
+        this.$refs.ScheduleModal.open()
       },
       updateMachineSchedule (item) {
         this.editedSession=item

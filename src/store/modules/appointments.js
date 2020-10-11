@@ -5,12 +5,14 @@ const state = {
     appointments:[],
     unassigned_appointments:[],
     assigned_appointments:[],
+    on_date_appointments:[],
 }
 
 const getters = {
     allAppointments: (state) => state.appointments,
     allUnassignedAppointments: (state) => state.unassigned_appointments,
-    allAssignedAppointments: (state) => state.assigned_appointments
+    allAssignedAppointments: (state) => state.assigned_appointments,
+    allOnDateAppointments: (state) => state.on_date_appointments
 }
 
 const actions = {
@@ -42,6 +44,16 @@ const actions = {
         .catch(error => {
             console.log(error)
         })
+    },
+    async fetchOnDateAppointments({ commit }) {
+        await axios.get(`${BASE_URL}/session/session_appointment/on_date_appointments/`)
+        .then(response => {
+            console.log(response.data)
+            commit('setOnDateAppointments', { appointments: response.data })
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 }
 
@@ -54,6 +66,9 @@ const mutations = {
     },
     setAssignedAppointments(state, { appointments }){
         state.assigned_appointments = appointments
+    },
+    setOnDateAppointments(state, { appointments }){
+        state.on_date_appointments = appointments
     }
 }
 
