@@ -18,7 +18,7 @@
               Assign Room and Machine
           </v-toolbar-title>
           <v-spacer></v-spacer>
-          <MachineScheduleModal  v-bind:session="editedSession" ref="MachineModal"/>
+          <MachineScheduleModal @onSaved="updateTable"  v-bind:session="editedSession" v-bind:index="selected_index" ref="MachineModal"/>
           <RoomScheduleModal v-bind:session="editedSession" ref="RoomModal"/>
         </v-toolbar>
       </template>
@@ -51,6 +51,7 @@ import RoomScheduleModal from "./modals/RoomScheduleModal.vue"
 
   export default {
     data: () => ({
+      selected_index: null,
       editedSession: null,
       dialog: false,
       dialogDelete: false,
@@ -59,12 +60,12 @@ import RoomScheduleModal from "./modals/RoomScheduleModal.vue"
           text: 'Patient Name',
           align: 'start',
           sortable: false,
-          value: 'client_name',
+          value: 'client_info.client_name',
         },
-        { text: 'Machine', value: 'machine' },
+        { text: 'Machine', value: 'machine_name' },
         { text: 'Machine Start Time', value: 'machine_start_time' },
         { text: 'Machine End Time', value: 'machine_end_time' },
-        { text: 'Room', value: 'room' },
+        { text: 'Room', value: 'room_name' },
         { text: 'Room Start Time', value: 'room_start_time' },
         { text: 'Room End Time', value: 'room_end_time' },
         { text: 'Actions', value: 'actions', sortable: false, align:'center' },
@@ -90,11 +91,16 @@ import RoomScheduleModal from "./modals/RoomScheduleModal.vue"
       },
       updateRoomSchedule (item) {
         this.editedSession=item
+        this.selected_index = this.unassigned_appointments.indexOf(item)
         this.$refs.MachineModal.open()
       },
       updateMachineSchedule (item) {
         this.editedSession=item
         this.$refs.RoomModal.open()
+      },
+      updateTable (item, index) {
+        Object.assign(this.unassigned_appointments[index], item)
+        console.log(item,"pass back")
       }
     },
   }

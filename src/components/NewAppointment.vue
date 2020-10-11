@@ -711,7 +711,6 @@ import { mapActions, mapGetters } from "vuex"
                     }
                 }
             await this.createSession(payload)
-            console.log(this.getAppointmentSessions)
             this.generated_sessions = this.getAppointmentSessions
             this.clearSessionsFields()
             this.color = 'success'

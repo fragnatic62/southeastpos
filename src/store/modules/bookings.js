@@ -60,7 +60,7 @@ const actions = {
         ).then (response => {
             commit('setUpdatedAppointmentSessions', { updated_appointment_sessions: response.data })
         }).catch(error => {
-            console.log(error.response)
+            console.log(error.response.data)
         })
     },
 

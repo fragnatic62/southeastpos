@@ -1,28 +1,55 @@
 <template>
   <v-dialog
     v-model="dialog"
-    max-width="250px"
+    max-width="760px"
   >
-    <v-card width="100%">
-      <v-data-table
-          :headers="room_headers"
-          :items="rooms"
-          sort-by="calories"
-          class="elevation-1"
-          :hide-default-footer="true"
-        >
-        <template v-slot:item.actions="{ item }">
-          <v-btn
-            x-small
-            color="success"
-            class="ma-0 pa-2"
-            dark
-            @click=""
-          >
-            Select Date/Time
-          </v-btn>
-        </template>
-      </v-data-table>
+    <v-card class="card-dialog">
+      <v-row class="row-container">
+        <v-col class="pa-0 ml-10 mt-6 mr-6 mb-6" cols="11">
+          <v-data-table
+              :headers="room_headers"
+              :items="rooms"
+              sort-by="calories"
+              class="elevation-1"
+              :hide-default-footer="true"
+            >
+            <template v-slot:item.actions="{ item }">
+              <v-btn
+                x-small
+                color="success"
+                class="ma-0 pa-2"
+                dark
+                @click=""
+              >
+                Select Date/Time
+              </v-btn>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
+      <v-row class="row-container">
+        <v-col class="pa-0 ml-10 mt-6 mr-6 mb-6" cols="11">
+          <v-data-table
+              :headers="room_headers"
+              :items="rooms"
+              sort-by="calories"
+              class="elevation-1"
+              :hide-default-footer="true"
+            >
+            <template v-slot:item.actions="{ item }">
+              <v-btn
+                x-small
+                color="success"
+                class="ma-0 pa-2"
+                dark
+                @click=""
+              >
+                Select Date/Time
+              </v-btn>
+            </template>
+          </v-data-table>
+        </v-col>
+      </v-row>
     </v-card>
   </v-dialog>
 </template>
@@ -84,5 +111,11 @@ import { mapActions, mapGetters } from "vuex"
 </script>
 
 <style scoped>
-
+  .row-container{
+    width: 100% !important;
+  }
+  .card-dialog {
+    width: 100%;
+    max-height: 100%;
+  }
 </style>

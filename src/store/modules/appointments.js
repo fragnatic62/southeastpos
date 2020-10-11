@@ -4,11 +4,13 @@ import { BASE_URL } from '../contants';
 const state = {
     appointments:[],
     unassigned_appointments:[],
+    assigned_appointments:[],
 }
 
 const getters = {
     allAppointments: (state) => state.appointments,
-    allUnassignedAppointments: (state) => state.unassigned_appointments
+    allUnassignedAppointments: (state) => state.unassigned_appointments,
+    allAssignedAppointments: (state) => state.assigned_appointments
 }
 
 const actions = {
@@ -30,6 +32,16 @@ const actions = {
         .catch(error => {
             console.log(error)
         })
+    },
+    async fetchAssignedAppointments({ commit }) {
+        await axios.get(`${BASE_URL}/session/session_appointment/assigned_appointments/`)
+        .then(response => {
+            console.log(response.data)
+            commit('setAssignedAppointments', { appointments: response.data })
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 }
 
@@ -39,6 +51,9 @@ const mutations = {
     },
     setUnassignedAppointments(state, { appointments }){
         state.unassigned_appointments = appointments
+    },
+    setAssignedAppointments(state, { appointments }){
+        state.assigned_appointments = appointments
     }
 }
 

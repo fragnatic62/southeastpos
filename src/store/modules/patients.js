@@ -20,7 +20,6 @@ const actions = {
     async fetchPatients({ commit }){
         await axios.get(`${BASE_URL}/patient/?limit=1000`)
         .then(response =>{
-            console.log(response.data)
             commit('setAllPatients',{ patients: response.data.results });
         })
         .catch(error => {
@@ -45,7 +44,6 @@ const actions = {
     },
 
     async updatePatient({ commit }, payload){
-        console.log(payload)
         await axios.patch(`${BASE_URL}/patient/${payload.data.id}/`, payload.data, 
             {
                 headers: {
